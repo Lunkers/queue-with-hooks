@@ -6,7 +6,7 @@ export const getQueue = (state = {}) => state.queue
  * reducers
  */
 export default (state, action) => {
-    switch(action.type){
+    switch (action.type) {
         case types.ADD_ITEM: {
             const itemToAdd = {
                 ...action.payload,
@@ -14,7 +14,16 @@ export default (state, action) => {
             }
             return {
                 ...state,
-                queue: [...state.queue, action.payload] 
+                queue: [...state.queue, itemToAdd]
+            }
+        }
+
+        case types.REMOVE_ITEM: {
+            const { payload } = action
+            const filteredQueue = state.queue.filter(i => i.id != payload.id)
+            return {
+                ...state,
+                queue: filteredQueue,
             }
         }
         default: {
