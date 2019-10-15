@@ -28,7 +28,7 @@ export default (state, action) => {
                       action: 'add',
                       item: itemToAdd
                     },
-                    channel: 'joppesqueue'
+                    channel: 'Queue'
                 });
             }
 
@@ -48,7 +48,7 @@ export default (state, action) => {
                       action: 'remove',
                       item: payload
                     },
-                    channel: 'joppesqueue'
+                    channel: 'Queue'
                 });
             }
 

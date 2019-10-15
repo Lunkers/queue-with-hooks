@@ -13,10 +13,8 @@ export default () => {
             uuid: PubNub.generateUUID(),
         });
 
-        console.log("subskrajbar");
-
         pubnub.subscribe({
-            channels: ["joppesqueue"]
+            channels: ["Queue"]
         });
     }
 
