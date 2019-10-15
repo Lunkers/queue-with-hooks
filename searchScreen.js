@@ -73,7 +73,7 @@ const styles = {
     
 }
 SearchView.navigationOptions = {
-    tabBarIcon: () => (<MaterialIcons name="search" size={32} />)
+    tabBarIcon: () => (<MaterialIcons name="search" size={32} color="#A64253"/>)
 }
 
 export default SearchView
