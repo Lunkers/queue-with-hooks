@@ -1,20 +1,25 @@
 import React from 'react'
-import { StyleSheet, Text, View, ScrollView, Button, TextInput } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Button, TextInput, Image } from 'react-native';
 import { StateContext, DispatchContext } from './context/context'
 import { getQueue } from './reducers/reducer'
 import { addItem } from './actions/add_item'
 import types from './actions/action_types'
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import QueueCard from './QueueCard'
 
-const SearchView = ({navigation}) => {
-    
+const SearchView = ({ navigation }) => {
+
     const state = React.useContext(StateContext)
     const dispatch = React.useContext(DispatchContext);
+    const [searchState, updateSearchText] = React.useState()
+    const [showFilters, changeShowFilters] = React.useState(false)
 
     const searchResults = [
-        { title: 'I love my wife', service: 'Spotify' },
-        { title: 'Friends', service: 'Netflix' },
-        { title: 'Doot Doot xd', service: 'Youtube' },
-        { title: 'Video Game', service: 'Steam' },
+        { title: 'I love my wife', service: 'Spotify', image: require('./images/album1.png'), mediaId: "Song1" },
+        { title: 'Friends', service: 'Netflix', image: require('./images/fronds.png'), mediaId: 'Netflix1' },
+        { title: 'Doot Doot xd', service: 'Youtube', image: require('./images/video1.png'), mediaId: 'Youtube1' },
+        { title: 'music 2', service: 'Spotify', image: require('./images/album2.png'), mediaId: 'Song2' },
     ]
 
     const addMedia = (item) => dispatch(addItem({
@@ -22,14 +27,18 @@ const SearchView = ({navigation}) => {
         payload: item
     }))
 
-    const handleNavigation = () => {
-        navigation.navigate('Queue')
-    }
-    console.log('In search')
+
     return (
         <View style={styles.scrollView}>
-            {searchResults.map(result => (
-                <Button onPress={() => addMedia(result)} title={result.title} key={result.title}></Button>
+            <View style={styles.searchBox}>
+                <MaterialIcons name="search" size={32} color="white" />
+                <TextInput placeholder="search" onChange={text => updateSearchText(text)} style={{ width: "75%" }} />
+                <Button title="filters" color="#FCE7CF" borderRadius={5} onPress={() => changeShowFilters(!showFilters)}></Button>
+            </View>
+            {searchState && searchState !== '' && searchResults.map(result => (
+                <TouchableOpacity onPress={() => addMedia(result)} key={result.mediaId}>
+                    <QueueCard key={result.mediaId} item={result} inQueue={false}/>
+                </TouchableOpacity>
             ))}
         </View>
     )
@@ -37,21 +46,33 @@ const SearchView = ({navigation}) => {
 
 const styles = {
     queueItem: {
-        backgroundColor:"cyan",
-
+        backgroundColor: "green",
+        color: "#fff",
+        marginTop: 10,
+        marginBottom: 10,
+        width: "80%"
     },
     scrollView: {
-        backgroundColor: "grey",
+        marginTop: 25,
+        height: "100%",
         width: "100%",
-        height: "100%"
+        backgroundColor: "#634B66",
+        alignItems: 'center'
     },
+    searchBox: {
+        backgroundColor: "#FCE7CF",
+        width: "90%",
+        height: "5%",
+        color: "#FCE7CF",
+        flexDirection: "row",
+        marginBottom: 10,
+        marginTop: 10,
+        borderRadius: 10
+    },
+    
 }
 SearchView.navigationOptions = {
-    headerTitle: (
-        <View >
-            <TextInput placeholder="search"/>
-        </View>
-    )
+    tabBarIcon: () => (<MaterialIcons name="search" size={32} />)
 }
 
 export default SearchView

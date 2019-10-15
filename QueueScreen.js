@@ -6,8 +6,9 @@ import types from './actions/action_types'
 import QueueCard from './QueueCard'
 import { removeItem } from './actions/remove_item'
 import getPubNub from './pubnub';
+import { MaterialIcons } from '@expo/vector-icons';
 
-const QueueScreen = ({navigation}) => {
+const QueueScreen = ({ navigation }) => {
 
     const state = React.useContext(StateContext);
     const dispatch = React.useContext(DispatchContext);
@@ -23,8 +24,6 @@ const QueueScreen = ({navigation}) => {
         type: types.REMOVE_ITEM,
         payload: item
     }))
-
-    const handlePress = () => navigation.navigate('Search')
 
     useEffect(() => {
         let pubnub = getPubNub();
@@ -50,12 +49,11 @@ const QueueScreen = ({navigation}) => {
     });
 
     return (
-        <View>
-            <ScrollView style={styles.scrollView} contentContainerStyle={styles.container}>
-                {getQueue(state).map(item => (<QueueCard key={item.id} id={item.id} title={item.title} service={item.service} swipeClose={() => removeItem(item)}/>))}
-            </ScrollView>
-            <Button style={styles.button} title="Add item" onPress={() => handlePress()} />
-        </View>
+
+        <ScrollView style={styles.scrollView} contentContainerStyle={styles.container}>
+            <Text style={styles.headerText}>hiva</Text>
+            {getQueue(state).map(item => (<QueueCard key={item.id} item={item} inQueue={true} />))}
+        </ScrollView>
     )
 }
 
@@ -63,12 +61,13 @@ const QueueScreen = ({navigation}) => {
 
 const styles = {
     queueItem: {
-        backgroundColor:"cyan",
+        backgroundColor: "cyan",
 
     },
     scrollView: {
-        height: "80%",
-        width: "100%"
+        height: "100%",
+        width: "100%",
+        backgroundColor: "#634B66"
     },
     button: {
         flex: 1,
@@ -76,7 +75,15 @@ const styles = {
     },
     container: {
         justifyContent: 'center',
-      }
+        textAlign: "center",
+        paddingLeft: 20,
+        paddingRight: 20
+    },
+    headerText: {
+        marginTop: 22,
+        color: "white",
+        fontSize: 32,
+    }
 }
 
 export default QueueScreen

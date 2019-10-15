@@ -3,11 +3,12 @@ import { StyleSheet, Text, View } from 'react-native';
 import { StateContext, DispatchContext, initialState } from './context/context';
 import reducer from './reducers/reducer'
 import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack'
 import QueueScreen from './QueueScreen';
 import SearchScreen from './searchScreen';
+import { createBottomTabNavigator} from 'react-navigation-tabs'
 
-const MainNavigator = createStackNavigator(
+
+const MainNavigator = createBottomTabNavigator(
   {
     Queue: QueueScreen,
     Search: SearchScreen,
@@ -23,13 +24,15 @@ const MainNavigator = createStackNavigator(
 )
 
 const AppContainer = createAppContainer(MainNavigator);
+//disablea varningar
+console.disableYellowBox = true;
 
 export default function App() {
   const [state, dispatch] = React.useReducer(reducer, initialState);
   return (
     <DispatchContext.Provider value={dispatch}>
       <StateContext.Provider value={state}>
-          <AppContainer />
+          <AppContainer style={styles.container}/>
       </StateContext.Provider>
     </DispatchContext.Provider>
   );
@@ -37,7 +40,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
+    backgroundColor: '#634B66',
     alignItems: 'center',
     justifyContent: 'center',
   },
