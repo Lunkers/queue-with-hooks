@@ -83,14 +83,18 @@ const styles = {
         paddingRight: 20
     },
     headerText: {
-        color: "white",
+        color: '#FEE7D1',
         fontSize: 22,
         marginLeft: 10,
         marginTop:10
     },
     logo: {
-        width: 40, height: 43
+        width: 40, height: 42
     }
+}
+
+QueueScreen.navigationOptions = {
+    tabBarIcon: () => (<MaterialIcons name="video-library" size={32} color="#A64253"/>)
 }
 
 export default QueueScreen
