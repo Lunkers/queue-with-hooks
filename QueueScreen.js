@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react'
-import { StyleSheet, Text, View, ScrollView, Button, TextInput } from 'react-native';
+import React, { useEffect } from 'react'
+import { StyleSheet, Text, View, ScrollView, Button, TextInput, Image } from 'react-native';
 import { StateContext, DispatchContext } from './context/context'
 import { getQueue } from './reducers/reducer'
 import types from './actions/action_types'
@@ -51,7 +51,10 @@ const QueueScreen = ({ navigation }) => {
     return (
 
         <ScrollView style={styles.scrollView} contentContainerStyle={styles.container}>
-            <Text style={styles.headerText}>hiva</Text>
+            <View style={{ flexDirection: "row", marginTop: 22 }}>
+                <Image source={require("./images/hivaLogo.png")} style={styles.logo} />
+                <Text style={styles.headerText}>hiva</Text>
+            </View>
             {getQueue(state).map(item => (<QueueCard key={item.id} item={item} inQueue={true} />))}
         </ScrollView>
     )
@@ -80,9 +83,13 @@ const styles = {
         paddingRight: 20
     },
     headerText: {
-        marginTop: 22,
         color: "white",
-        fontSize: 32,
+        fontSize: 22,
+        marginLeft: 10,
+        marginTop:10
+    },
+    logo: {
+        width: 40, height: 43
     }
 }
 
