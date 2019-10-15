@@ -10,6 +10,7 @@ import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default QueueCard = ({ item, inQueue }) => {
     const dispatch = React.useContext(DispatchContext);
+    let _swip = React.createRef();
     const renderLeft = (progress, dragX) => (<View style={styles.infoCard}>
         <MaterialIcons name="queue" size={32} />
     </View>)
@@ -17,7 +18,6 @@ export default QueueCard = ({ item, inQueue }) => {
         type: types.REMOVE_ITEM,
         payload: item
     }))
-
     const addItem = () => dispatch(addItem({
         type: types.ADD_ITEM,
         payload: item
@@ -25,17 +25,17 @@ export default QueueCard = ({ item, inQueue }) => {
     
     const renderRight = (progress, dragX) => (
         <TouchableOpacity onPress={() => inQueue ? deleteItem() : addItem()}>
-            <View style={styles.deleteMenu}>
-                <MaterialIcons name="delete" size={32} />
+            <View style={inQueue ? styles.deleteMenu : styles.addMenu}>
+                <MaterialIcons name={inQueue ? "delete" : "add"} size={32} />
             </View>
         </TouchableOpacity>
     )
     return (
-        <Swipeable renderLeftActions={renderLeft} style={styles.card} renderRightActions={renderRight}>
+        <Swipeable renderLeftActions={renderLeft} style={styles.card} renderRightActions={renderRight} ref={_swip}>
             <View style={styles.card}>
                 <View style={styles.card}>
 
-                    <MaterialCommunityIcons name="dots-vertical" size={38} />
+                    <MaterialCommunityIcons name="dots-vertical" size={38} onPress={() => _swip.current.openLeft()}/>
                     <Image source={item.image} style={{ width: 60, height: 60, }} />
                     <View>
                         <Text>{item.title}</Text>
@@ -81,6 +81,17 @@ const styles = {
         marginBottom: 10,
         height: '100%',
         alignItems:'center'
+    },
+    addMenu: {
+        backgroundColor: "green",
+        justifyContent: "flex-end",
+        flexDirection: 'row',
+        marginTop: 10,
+        marginBottom: 10,
+        height: '100%',
+        alignItems:'center',
+        flex:1,
+        borderRadius: 5
     }
 
 }

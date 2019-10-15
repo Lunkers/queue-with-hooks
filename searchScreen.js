@@ -1,11 +1,10 @@
 import React from 'react'
-import { StyleSheet, Text, View, ScrollView, Button, TextInput, Image } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Button, TextInput, Image, TouchableOpacity } from 'react-native';
 import { StateContext, DispatchContext } from './context/context'
 import { getQueue } from './reducers/reducer'
 import { addItem } from './actions/add_item'
 import types from './actions/action_types'
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import QueueCard from './QueueCard'
 
 const SearchView = ({ navigation }) => {
