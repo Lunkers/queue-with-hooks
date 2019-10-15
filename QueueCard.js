@@ -13,6 +13,8 @@ export default QueueCard = ({ item, inQueue }) => {
     let _swip = React.createRef();
     const renderLeft = (progress, dragX) => (<View style={styles.infoCard}>
         <MaterialIcons name="queue" size={32} />
+        <MaterialCommunityIcons size={32} name="heart-outline"/>
+        <MaterialCommunityIcons name="dots-vertical" size={38} onPress={() => _swip.current.close()}/>
     </View>)
     const deleteItem = () => dispatch(removeItem({
         type: types.REMOVE_ITEM,
@@ -22,7 +24,7 @@ export default QueueCard = ({ item, inQueue }) => {
         type: types.ADD_ITEM,
         payload: item
     }))
-    
+
     const renderRight = (progress, dragX) => (
         <TouchableOpacity onPress={() => inQueue ? deleteItem() : addItem()}>
             <View style={inQueue ? styles.deleteMenu : styles.addMenu}>
@@ -71,7 +73,8 @@ const styles = {
         padding: 10,
         borderRadius: 5,
         alignItems:'center',
-        justifyContent:'center'
+        justifyContent:'space-around',
+        flexDirection: 'row'
     },
     deleteMenu: {
         backgroundColor: "red",
@@ -89,6 +92,7 @@ const styles = {
         marginTop: 10,
         marginBottom: 10,
         height: '100%',
+        width: "30%",
         alignItems:'center',
         flex:1,
         borderRadius: 5

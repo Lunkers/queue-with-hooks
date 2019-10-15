@@ -10,11 +10,11 @@ export default () => {
             publishKey: "pub-c-ab1f1896-d4ac-4b70-aaf4-ca968c88c2f5",
             secretKey: "sec-c-NjI1MjhlNDEtNmEwYi00NjNmLWJkYTgtNDYwNzFhZDBkNmQz",
             ssl: true,
+            uuid: PubNub.generateUUID(),
         });
 
         pubnub.subscribe({
-            channels: ["Queue"],
-            withPresence: true
+            channels: ["Queue"]
         });
     }
 

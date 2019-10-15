@@ -6,6 +6,7 @@ import { createAppContainer } from 'react-navigation';
 import QueueScreen from './QueueScreen';
 import SearchScreen from './searchScreen';
 import { createBottomTabNavigator} from 'react-navigation-tabs'
+import FlashMessage from 'react-native-flash-message';
 
 
 const MainNavigator = createBottomTabNavigator(
@@ -33,8 +34,10 @@ export default function App() {
     <DispatchContext.Provider value={dispatch}>
       <StateContext.Provider value={state}>
           <AppContainer style={styles.container}/>
+          <FlashMessage position="top"/>
       </StateContext.Provider>
     </DispatchContext.Provider>
+    
   );
 }
 const styles = StyleSheet.create({

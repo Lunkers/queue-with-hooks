@@ -1,11 +1,12 @@
 import React from 'react'
-import { StyleSheet, Text, View, ScrollView, Button, TextInput, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Button, TextInput, Image, TouchableOpacity, SafeAreaView } from 'react-native';
 import { StateContext, DispatchContext } from './context/context'
 import { getQueue } from './reducers/reducer'
 import { addItem } from './actions/add_item'
 import types from './actions/action_types'
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import QueueCard from './QueueCard'
+import { showMessage } from 'react-native-flash-message';
 
 const SearchView = ({ navigation }) => {
 
@@ -23,25 +24,33 @@ const SearchView = ({ navigation }) => {
         { title: 'music 3', service: 'Spotify', image: require('./images/album2.png'), mediaId: 'Song3', youtubeId: "YU3eDa8ehzc" },
     ]
 
-    const addMedia = (item) => dispatch(addItem({
-        type: types.ADD_ITEM,
-        payload: item
-    }))
+    const addMedia = (item) => {
+        showMessage({
+            message: 'added to queue!',
+            type: 'success'
+        })
+        dispatch(addItem({
+            type: types.ADD_ITEM,
+            payload: item
+        }))
+    }
 
 
     return (
-        <View style={styles.scrollView}>
+        <SafeAreaView style={styles.scrollView}>
             <View style={styles.searchBox}>
                 <MaterialIcons name="search" size={32} color="white" />
                 <TextInput placeholder="search" onChange={text => updateSearchText(text)} style={{ width: "75%" }} />
                 <Button title="filters" color="#FCE7CF" borderRadius={5} onPress={() => changeShowFilters(!showFilters)}></Button>
             </View>
-            {searchState && searchState !== '' && searchResults.map(result => (
-                <TouchableOpacity onPress={() => addMedia(result)} key={result.mediaId}>
-                    <QueueCard key={result.mediaId} item={result} inQueue={false}/>
-                </TouchableOpacity>
-            ))}
-        </View>
+            <ScrollView style={{marginBottom: 50}} contentContainerStyle={{alignItems: 'center'}}>
+                {searchState && searchState !== '' && searchResults.map(result => (
+                    <TouchableOpacity onPress={() => addMedia(result)} key={result.mediaId}>
+                        <QueueCard key={result.mediaId} item={result} inQueue={false} />
+                    </TouchableOpacity>
+                ))}
+            </ScrollView>
+        </SafeAreaView>
     )
 }
 
@@ -70,7 +79,7 @@ const styles = {
         marginTop: 10,
         borderRadius: 10
     },
-    
+
 }
 SearchView.navigationOptions = {
     tabBarIcon: () => (<MaterialIcons name="search" size={32} color="#A64253"/>)

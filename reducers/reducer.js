@@ -14,13 +14,23 @@ export default (state, action) => {
                 id: state.queue.length + 1
             }
 
-            getPubNub().publish({
-                message: {
-                  action: 'add',
-                  item: itemToAdd
-                },
-                channel: 'Queue'
-            });
+            let shouldSend = (action.doNotSendMessage !== true);
+
+            console.log(itemToAdd);
+
+            //console.log(action);
+            //console.log("Ska vi skicka? " +  (shouldSend ? "Kör på" : "Nej vi skiter i det"));
+
+            if (shouldSend) {
+                console.log("Tjoff!");
+                getPubNub().publish({
+                    message: {
+                      action: 'add',
+                      item: itemToAdd
+                    },
+                    channel: 'Queue'
+                });
+            }
 
             return {
                 ...state,
@@ -32,13 +42,15 @@ export default (state, action) => {
             const { payload } = action
             const filteredQueue = state.queue.filter(i => i.id != payload.id)
 
-            getPubNub().publish({
-                message: {
-                  action: 'remove',
-                  item: payload
-                },
-                channel: 'Queue'
-            });
+            if (action.doNotSendMessage !== true) {
+                getPubNub().publish({
+                    message: {
+                      action: 'remove',
+                      item: payload
+                    },
+                    channel: 'Queue'
+                });
+            }
 
             return {
                 ...state,
