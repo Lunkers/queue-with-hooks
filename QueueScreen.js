@@ -14,6 +14,11 @@ const QueueScreen = ({navigation}) => {
 
     const [users, setUsers] = React.useState([]);
 
+    const addItem = (item) => dispatch(addItem({
+        type: types.ADD_ITEM,
+        payload: item
+    }))
+
     const removeItem = item => dispatch(removeItem({
         type: types.REMOVE_ITEM,
         payload: item
@@ -26,8 +31,14 @@ const QueueScreen = ({navigation}) => {
 
         let listener = {
             message: (m) => {
-                console.log(m.message)
-                //console.log(m.message.item.title);
+                if (m.publisher != getPubNub().getUUID()) {
+                    if (m.message.action == "add") {
+                        addItem(m.message.item);
+                    }
+                    else if (m.message.action == "remove") {
+                        removeItem(m.message.item);
+                    }
+                }
             }
         };
 
