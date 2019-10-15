@@ -1,4 +1,5 @@
 import types from '../actions/action_types';
+import getPubNub from '../pubnub';
 
 export const getQueue = (state = {}) => state.queue
 
@@ -12,6 +13,15 @@ export default (state, action) => {
                 ...action.payload,
                 id: state.queue.length + 1
             }
+
+            getPubNub().publish({
+                message: {
+                  action: 'add',
+                  item: itemToAdd
+                },
+                channel: 'Queue'
+            });
+
             return {
                 ...state,
                 queue: [...state.queue, itemToAdd]
@@ -21,6 +31,15 @@ export default (state, action) => {
         case types.REMOVE_ITEM: {
             const { payload } = action
             const filteredQueue = state.queue.filter(i => i.id != payload.id)
+
+            getPubNub().publish({
+                message: {
+                  action: 'remove',
+                  item: payload
+                },
+                channel: 'Queue'
+            });
+
             return {
                 ...state,
                 queue: filteredQueue,
