@@ -6,14 +6,16 @@ import types from './actions/action_types'
 import QueueCard from './QueueCard'
 import { removeItem } from './actions/remove_item'
 import getPubNub from './pubnub';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 const QueueScreen = ({ navigation }) => {
 
     const state = React.useContext(StateContext);
     const dispatch = React.useContext(DispatchContext);
-
+    const q = getQueue(state)
     const [users, setUsers] = React.useState([]);
+    const nowPlaying = q[0]
+    console.log(nowPlaying)
 
     const addItem = (item) => dispatch(addItem({
         type: types.ADD_ITEM,
@@ -49,14 +51,34 @@ const QueueScreen = ({ navigation }) => {
     });
 
     return (
-
-        <ScrollView style={styles.scrollView} contentContainerStyle={styles.container}>
-            <View style={{ flexDirection: "row", marginTop: 22 }}>
+        <View style={{ ...styles.scrollView, alignItems: 'center' }}>
+             <View style={{ flexDirection: "row", marginTop: 22 }}>
                 <Image source={require("./images/hivaLogo.png")} style={styles.logo} />
                 <Text style={styles.headerText}>hiva</Text>
             </View>
-            {getQueue(state).map(item => (<QueueCard key={item.id} item={item} inQueue={true} />))}
-        </ScrollView>
+            {nowPlaying !== undefined &&
+                <View>
+                    <Text style={styles.headerText}>Now playing:</Text>
+                    <View style={{backgroundColor: '#A64253'}}>
+                        <View style={{ flexDirection: 'row' }}>
+                            <Image source={nowPlaying.image} style={{ width: 100, height: 100 }} />
+                            <View>
+                                <Text>{nowPlaying.title}</Text>
+                                <Text>{nowPlaying.service}</Text>
+                            </View>
+                        </View>
+                        <View style={{flexDirection: 'row'}}>
+                            <MaterialCommunityIcons name="skip-previous" size={32} color="white"/>
+                            <MaterialCommunityIcons name="play" size={32} color="white" />
+                            <MaterialCommunityIcons name="skip-next" size={32} color="white"/>
+                        </View>
+                    </View>
+                </View>}
+            <ScrollView style={styles.scrollView} contentContainerStyle={styles.container}>
+
+                {getQueue(state).map(item => (<QueueCard key={item.id} item={item} inQueue={true} />))}
+            </ScrollView>
+        </View>
     )
 }
 
@@ -79,6 +101,7 @@ const styles = {
     container: {
         justifyContent: 'center',
         textAlign: "center",
+        alignItems: "center",
         paddingLeft: 20,
         paddingRight: 20
     },
