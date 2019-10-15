@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { StyleSheet, Text, View, ScrollView, Button, TextInput, Image } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Button, TextInput, Image, SafeAreaView } from 'react-native';
 import { StateContext, DispatchContext } from './context/context'
 import { getQueue } from './reducers/reducer'
 import types from './actions/action_types'
@@ -55,7 +55,7 @@ const QueueScreen = ({ navigation }) => {
     });
 
     return (
-        <View style={{ ...styles.scrollView, alignItems: 'center' }}>
+        <SafeAreaView style={{ ...styles.scrollView, alignItems: 'center' }}>
              <View style={{ flexDirection: "row", marginTop: 22 }}>
                 <Image source={require("./images/hivaLogo.png")} style={styles.logo} />
                 <Text style={styles.headerText}>hiva</Text>
@@ -82,7 +82,7 @@ const QueueScreen = ({ navigation }) => {
 
                 {getQueue(state).map(item => (<QueueCard key={item.id} item={item} inQueue={true} />))}
             </ScrollView>
-        </View>
+        </SafeAreaView>
     )
 }
 

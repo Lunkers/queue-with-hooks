@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, ScrollView, Button, TextInput, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Button, TextInput, Image, TouchableOpacity, SafeAreaView } from 'react-native';
 import { StateContext, DispatchContext } from './context/context'
 import { getQueue } from './reducers/reducer'
 import { addItem } from './actions/add_item'
@@ -37,7 +37,7 @@ const SearchView = ({ navigation }) => {
 
 
     return (
-        <View style={styles.scrollView}>
+        <SafeAreaView style={styles.scrollView}>
             <View style={styles.searchBox}>
                 <MaterialIcons name="search" size={32} color="white" />
                 <TextInput placeholder="search" onChange={text => updateSearchText(text)} style={{ width: "75%" }} />
@@ -50,7 +50,7 @@ const SearchView = ({ navigation }) => {
                     </TouchableOpacity>
                 ))}
             </ScrollView>
-        </View>
+        </SafeAreaView>
     )
 }
 
