@@ -16,10 +16,12 @@ const SearchView = ({ navigation }) => {
     const [showFilters, changeShowFilters] = React.useState(false)
 
     const searchResults = [
-        { title: 'I love my wife', service: 'Spotify', image: require('./images/album1.png'), mediaId: "Song1" },
-        { title: 'Friends', service: 'Netflix', image: require('./images/fronds.png'), mediaId: 'Netflix1' },
-        { title: 'Doot Doot xd', service: 'Youtube', image: require('./images/video1.png'), mediaId: 'Youtube1' },
-        { title: 'music 2', service: 'Spotify', image: require('./images/album2.png'), mediaId: 'Song2' },
+        { title: 'I love my wife', service: 'Spotify', image: require('./images/album1.png'), mediaId: "Song1", youtubeId: "TQcGnEhciNY" },
+        { title: 'Friends', service: 'Netflix', image: require('./images/fronds.png'), mediaId: 'Netflix1', youtubeId: "Kl7WUJRyyEk" },
+        { title: 'Doot Doot xd', service: 'Youtube', image: require('./images/video1.png'), mediaId: 'Youtube1', youtubeId: "eVrYbKBrI7o" },
+        { title: 'Jackbox', service: 'Steam', image: require('./images/album2.png'), mediaId: 'jackbox', youtubeId: "yhW8PfKB828" },
+        { title: 'overcooked', service: 'Steam', image: require('./images/album2.png'), mediaId: 'overcooked', youtubeId: "0n1x-zd7gZM" },
+        { title: 'music 3', service: 'Spotify', image: require('./images/album2.png'), mediaId: 'Song3', youtubeId: "YU3eDa8ehzc" },
     ]
 
     const addMedia = (item) => dispatch(addItem({
