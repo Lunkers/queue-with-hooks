@@ -4,6 +4,7 @@ import { StateContext, DispatchContext } from './context/context'
 import { getQueue } from './reducers/reducer'
 import types from './actions/action_types'
 import QueueCard from './QueueCard'
+import { addItem } from './actions/add_item'
 import { removeItem } from './actions/remove_item'
 import getPubNub from './pubnub';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -15,27 +16,30 @@ const QueueScreen = ({ navigation }) => {
 
     const [users, setUsers] = React.useState([]);
 
-    const addItem = (item) => dispatch(addItem({
+    const addMedia = (item) => dispatch({
         type: types.ADD_ITEM,
-        payload: item
-    }))
+        payload: item,
+        doNotSendMessage: true
+    })
 
-    const removeItem = item => dispatch(removeItem({
+    const removeMedia = item => dispatch({
         type: types.REMOVE_ITEM,
-        payload: item
-    }))
+        payload: item,
+        doNotSendMessage: true
+    })
 
     useEffect(() => {
         let pubnub = getPubNub();
 
         let listener = {
             message: (m) => {
+                console.log("Nytt brev!");
                 if (m.publisher != getPubNub().getUUID()) {
                     if (m.message.action == "add") {
-                        addItem(m.message.item);
+                        addMedia(m.message.item);
                     }
                     else if (m.message.action == "remove") {
-                        removeItem(m.message.item);
+                        removeMedia(m.message.item);
                     }
                 }
             }

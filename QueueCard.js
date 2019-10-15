@@ -22,7 +22,7 @@ export default QueueCard = ({ item, inQueue }) => {
         type: types.ADD_ITEM,
         payload: item
     }))
-    
+
     const renderRight = (progress, dragX) => (
         <TouchableOpacity onPress={() => inQueue ? deleteItem() : addItem()}>
             <View style={styles.deleteMenu}>
