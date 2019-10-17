@@ -16,7 +16,6 @@ const QueueScreen = ({ navigation }) => {
     const q = getQueue(state)
     const [users, setUsers] = React.useState([]);
     const nowPlaying = q[0]
-    console.log(nowPlaying)
 
     const addMedia = (item) => dispatch({
         type: types.ADD_ITEM,
@@ -57,7 +56,6 @@ const QueueScreen = ({ navigation }) => {
 
         let listener = {
             message: (m) => {
-                console.log("Nytt brev!");
                 if (m.publisher != getPubNub().getUUID()) {
                     if (m.message.action == "add") {
                         addMedia(m.message.item);
