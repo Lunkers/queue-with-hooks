@@ -8,6 +8,24 @@ export const getQueue = (state = {}) => state.queue
  */
 export default (state, action) => {
     switch (action.type) {
+        case types.PAUSE_ITEM: {
+            const { payload } = action
+
+            if (action.doNotSendMessage !== true) {
+                getPubNub().publish({
+                    message: {
+                      action: 'pause',
+                      item: payload
+                    },
+                    channel: 'Queue'
+                });
+            }
+
+            return {
+                ...state,
+            }
+        }
+
         case types.ADD_ITEM: {
             const itemToAdd = {
                 ...action.payload,
