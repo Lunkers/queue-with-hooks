@@ -111,11 +111,11 @@ export default QueueCard = ({ item, inQueue }) => {
         >
         <Animated.View style={{opacity: fadeAnim}}>
             <View style={styles.card}>
-                <MaterialCommunityIcons name="dots-vertical" size={38} onPress={() => _swip.current.openLeft()}/>
+                <MaterialCommunityIcons name="dots-vertical" size={38} color="#FEE7D1" onPress={() => _swip.current.openLeft()}/>
                 <Image source={item.image} style={{ width: 60, height: 60, }} />
                 <View>
-                    <Text>{item.title}</Text>
-                    <Text>{item.service}</Text>
+                    <Text style={styles.service}>{item.title}</Text>
+                    <Text style={styles.service}>{item.service}</Text>
                 </View>
             </View>
         </Animated.View>
@@ -191,6 +191,10 @@ const styles = {
         alignItems: 'center',
         flex: 1,
         justifyContent: 'center',
+    },
+    service: {
+        color: "#FEE7D1",
+        fontSize: 15
     },
 
 }

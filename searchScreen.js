@@ -17,10 +17,10 @@ const SearchView = ({ navigation }) => {
     const [filter, updateFilter] = React.useState(null)
 
     const searchResults = [
-        {title: "Brock's best line ever", service: "Youtube", image: require('./images/youtube1.png'), mediaId: 'YoutubeBrock', youtubeId: "oawUi9s3ENE"},
+        {title: "Brock's best line", service: "Youtube", image: require('./images/youtube1.png'), mediaId: 'YoutubeBrock', youtubeId: "oawUi9s3ENE"},
         { title: 'Best cat jump ever', service: 'Youtube', image: require('./images/youtube2.png'), mediaId: "YoutubeCat", youtubeId: "-5Ilq3kFxek" },
         { title: 'Look, Dandelion!', service: 'Youtube', image: require('./images/youtube3.png'), mediaId: 'YoutubeFlower', youtubeId: "b9KAWFdB2-w" },
-        { title: "You're dereferencing a null pointer!", service: 'Youtube', image: require('./images/youtube4.png'), mediaId: 'YoutubePointer', youtubeId: "bLHL75H_VEM" },
+        { title: "You're derefe...", service: 'Youtube', image: require('./images/youtube4.png'), mediaId: 'YoutubePointer', youtubeId: "bLHL75H_VEM" },
         { title: 'Long video', service: 'Youtube', image: require('./images/youtube5.png'), mediaId: 'YoutubeLong', youtubeId: "FCPdIvXo2rU" },
         { title: 'Peppa Pig', service: 'Netflix', image: require('./images/netflix1.png'), mediaId: 'PeppaPig', youtubeId: "TRPLiomQcws" },
         { title: 'Breaking Bad', service: 'Netflix', image: require('./images/netflix2.jpg'), mediaId: 'BreakingBad', youtubeId: "F1HNuAE9WdU" },
@@ -28,15 +28,15 @@ const SearchView = ({ navigation }) => {
         { title: 'Pulp fiction', service: 'Netflix', image: require('./images/netflix4.jpg'), mediaId: 'Pulp', youtubeId: "igATSoUU954" },
         { title: 'Nailed it!', service: 'Netflix', image: require('./images/netflix5.jpg'), mediaId: 'Nailed', youtubeId: "pb7CBZ952zs" },
         { title: 'Hey mama', service: 'Spotify', image: require('./images/spotify1.jpg'), mediaId: 'kanye', youtubeId: "cnYEsQRBU4Q" },
-        { title: 'The Face I Love (Seu Encanto)', service: 'Spotify', image: require('./images/spotify2.jpg'), mediaId: 'Brazil', youtubeId: "YU3eDa8ehzc" },
-        { title: 'Time Of The Season (Mono Version)', service: 'Spotify', image: require('./images/spotify3.jpg'), mediaId: 'Mono', youtubeId: "mRD4w4wQSew" },
+        { title: 'The Face I Love...', service: 'Spotify', image: require('./images/spotify2.jpg'), mediaId: 'Brazil', youtubeId: "YU3eDa8ehzc" },
+        { title: 'Time Of The Sea...', service: 'Spotify', image: require('./images/spotify3.jpg'), mediaId: 'Mono', youtubeId: "mRD4w4wQSew" },
         { title: 'Gettysburg', service: 'Spotify', image: require('./images/spotify4.jpeg'), mediaId: 'Getty', youtubeId: "3wUrD_bqxPU" },
-        { title: 'Und immer wieder bin ich nichts', service: 'Spotify', image: require('./images/spotify5.jpeg'), mediaId: 'deutsch', youtubeId: "89tqvsI8qI4" },
+        { title: 'Und immer wie...', service: 'Spotify', image: require('./images/spotify5.jpeg'), mediaId: 'deutsch', youtubeId: "89tqvsI8qI4" },
         { title: 'Instant Crush', service: 'Spotify', image: require('./images/spotify6.jpeg'), mediaId: 'daft', youtubeId: "53Ei90TRsBc" },
         { title: 'overcooked', service: 'Steam', image: require('./images/steam2.png'), mediaId: 'overcooked', youtubeId: "0n1x-zd7gZM" },
-        { title: 'The Jackbox party pack', service: 'Steam', image: require('./images/steam1.jpg'), mediaId: 'jackbox', youtubeId: "yhW8PfKB828" },
+        { title: 'The Jackbox par...', service: 'Steam', image: require('./images/steam1.jpg'), mediaId: 'jackbox', youtubeId: "yhW8PfKB828" },
         { title: 'Use your words', service: 'Steam', image: require('./images/steam3.png'), mediaId: 'words', youtubeId: "cFAjK4DVnWE" },
-        { title: 'Lovers in a dangerous spacetime', service: 'Steam', image: require('./images/steam4.png'), mediaId: 'lovers', youtubeId: "5L20xxqDfII" },
+        { title: 'Lovers in a da...', service: 'Steam', image: require('./images/steam4.png'), mediaId: 'lovers', youtubeId: "5L20xxqDfII" },
         { title: 'Cuphead', service: 'Steam', image: require('./images/steam5.jpg'), mediaId: 'cup', youtubeId: "NN-9SQXoi50" },
     ]
 
@@ -70,7 +70,7 @@ const SearchView = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.scrollView}>
             <View style={styles.searchBox}>
-                <MaterialIcons name="search" size={32} color="white" />
+                <MaterialIcons name="search" size={25} color="white" />
                 <TextInput placeholder="search" onChange={text => updateSearchText(text)} style={{ width: "75%" }} />
                 <Button title="filters" color="#FCE7CF" borderRadius={5} onPress={() => changeShowFilters(!showFilters)}></Button>
             </View>
