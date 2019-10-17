@@ -47,6 +47,11 @@ const QueueScreen = ({ navigation }) => {
 
     })
 
+    const addFavorite = item => dispatch({
+        type: types.ADD_FAVORITE,
+        payload: item
+    })
+
     useEffect(() => {
         let pubnub = getPubNub();
 

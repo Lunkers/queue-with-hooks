@@ -2,6 +2,7 @@ import types from '../actions/action_types';
 import getPubNub from '../pubnub';
 
 export const getQueue = (state = {}) => state.queue
+export const getFavorites = (state = {}) => state.favorites
 
 /**
  * reducers
