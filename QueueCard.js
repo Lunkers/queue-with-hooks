@@ -40,8 +40,8 @@ export default QueueCard = ({ item, inQueue }) => {
                     <MaterialCommunityIcons name="dots-vertical" size={38} onPress={() => _swip.current.openLeft()}/>
                     <Image source={item.image} style={{ width: 60, height: 60, }} />
                     <View>
-                        <Text>{item.title}</Text>
-                        <Text>{item.service}</Text>
+                        <Text style={styles.cardInfo}>{item.title}</Text>
+                        <Text style={styles.cardInfo}>{item.service}</Text>
                     </View>
                 </View>
             </View>
@@ -96,6 +96,10 @@ const styles = {
         alignItems:'center',
         flex:1,
         borderRadius: 5
+    },
+    cardInfo: {
+        color: "white",
+        fontSize: 14
     }
 
 }

@@ -85,7 +85,6 @@ const styles = {
         width: "80%"
     },
     scrollView: {
-        marginTop: 25,
         height: "100%",
         width: "100%",
         backgroundColor: "#634B66",
