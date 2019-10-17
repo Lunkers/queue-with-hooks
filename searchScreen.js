@@ -17,17 +17,18 @@ const SearchView = ({ navigation }) => {
     const [filter, updateFilter] = React.useState(null)
 
     const searchResults = [
-        { title: 'I love my wife', service: 'Spotify', image: require('./images/album1.png'), mediaId: "Song1", youtubeId: "TQcGnEhciNY" },
-        { title: 'Friends', service: 'Netflix', image: require('./images/fronds.png'), mediaId: 'Netflix1', youtubeId: "Kl7WUJRyyEk" },
-        { title: 'Doot Doot xd', service: 'Youtube', image: require('./images/video1.png'), mediaId: 'Youtube1', youtubeId: "eVrYbKBrI7o" },
-        { title: 'Jackbox', service: 'Steam', image: require('./images/album2.png'), mediaId: 'jackbox', youtubeId: "yhW8PfKB828" },
-        { title: 'overcooked', service: 'Steam', image: require('./images/album2.png'), mediaId: 'overcooked', youtubeId: "0n1x-zd7gZM" },
-        { title: 'music 3', service: 'Spotify', image: require('./images/album2.png'), mediaId: 'Song3', youtubeId: "YU3eDa8ehzc" },
+        { title: 'Best cat jump ever', service: 'Youtube', image: require('./images/youtube2.png'), mediaId: "YoutubeCat", youtubeId: "-5Ilq3kFxek" },
+        { title: 'Look, Dandelion!', service: 'Youtube', image: require('./images/youtube3.png'), mediaId: 'YoutubeFlower', youtubeId: "b9KAWFdB2-w" },
+        { title: 'Peppa Pig', service: 'Netflix', image: require('./images/netflix1.png'), mediaId: 'PeppaPig', youtubeId: "TRPLiomQcws" },
+        { title: 'Breaking Bad', service: 'Netflix', image: require('./images/netflix2.jpg'), mediaId: 'BreakingBad', youtubeId: "F1HNuAE9WdU" },
+        { title: 'Hey mama', service: 'Spotify', image: require('./images/spotify1.jpg'), mediaId: 'kanye', youtubeId: "cnYEsQRBU4Q" },
+        { title: 'Instant Crush', service: 'Spotify', image: require('./images/spotify6.jpeg'), mediaId: 'daft', youtubeId: "53Ei90TRsBc" },
+        { title: 'overcooked', service: 'Steam', image: require('./images/steam2.png'), mediaId: 'overcooked', youtubeId: "0n1x-zd7gZM" },
+        { title: 'Cuphead', service: 'Steam', image: require('./images/steam5.jpg'), mediaId: 'cup', youtubeId: "NN-9SQXoi50" },
     ]
 
 
     const [results, updateResults] = React.useState(searchResults);
-    console.log(results)
     const addMedia = (item) => {
         showMessage({
             message: 'added to queue!',
@@ -55,7 +56,7 @@ const SearchView = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.scrollView}>
             <View style={styles.searchBox}>
-                <MaterialIcons name="search" size={32} color="#A64253" />
+                <MaterialIcons name="search" size={25} color="white" />
                 <TextInput placeholder="search" onChange={text => updateSearchText(text)} style={{ width: "75%" }} />
                 <Button title="filters" color="#FCE7CF" borderRadius={5} onPress={() => changeShowFilters(!showFilters)}></Button>
             </View>
@@ -97,7 +98,7 @@ const styles = {
         color: "#FCE7CF",
         flexDirection: "row",
         marginBottom: 10,
-        marginTop: 10,
+        marginTop: 32,
         borderRadius: 10
     },
 
