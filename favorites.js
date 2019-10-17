@@ -13,8 +13,8 @@ import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 const Favorites = ({ navigation }) => {
     const state = React.useContext(StateContext);
     return (
-        <SafeAreaView style={styles.scrollView}>
-            <Text style={{ color: "#FFF", marginTop: 22 }}> OOOOOO I LOVE MY WIFE</Text>
+        <SafeAreaView style={{...styles.scrollView, alignItems: 'center'}}>
+            <Text style={styles.headerText}>My Favorites</Text>
             <ScrollView style={styles.scrollView} contentContainerStyle={styles.container}>
 
                 {getFavorites(state).map(item => (<QueueCard key={item.id} item={item} inQueue={true} />))}
@@ -27,7 +27,14 @@ const styles = {
     scrollView: {
         height: "100%",
         width: "100%",
-        backgroundColor: "#634B66"
+        backgroundColor: "#634B66",
+        
+    },
+    headerText: {
+        color: '#FEE7D1',
+        fontSize: 22,
+        marginLeft: 10,
+        marginTop: 25
     },
 }
 

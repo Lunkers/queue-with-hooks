@@ -9,6 +9,8 @@ import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { RectButton } from "react-native-gesture-handler";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as Haptics from 'expo-haptics';
+import { addFavorite } from './actions/add_favorite'
+import { showMessage } from 'react-native-flash-message';
 
 const AnimatedIcon = Animated.createAnimatedComponent(Icon);
 
@@ -44,6 +46,14 @@ export default QueueCard = ({ item, inQueue }) => {
               style={[styles.action, { backgroundColor: "#ffab00" }]}
               onPress={() => {
                   /* HÄR HÄNDER DET */
+                  dispatch(addFavorite({
+                      type: types.ADD_FAVORITE,
+                      payload: item
+                  }));
+                  showMessage({
+                      message: 'Added to favorites!',
+                      type: "success"
+                  })
               }}>
               <MaterialCommunityIcons size={128} style={styles.actionText} name="heart-outline"/>
             </RectButton>
@@ -69,7 +79,7 @@ export default QueueCard = ({ item, inQueue }) => {
     };
 
     return (<Swipeable
-        ref={this.updateRef}
+        ref={_swip}
         friction={2}
         leftThreshold={80}
         rightThreshold={80}
@@ -77,6 +87,15 @@ export default QueueCard = ({ item, inQueue }) => {
         renderRightActions={renderRightAction}
         onSwipeableLeftWillOpen={() => {
             /* HÄR HÄNDER DET */
+            dispatch(addFavorite({
+                type: types.ADD_FAVORITE,
+                payload: item
+            }))
+            showMessage({
+                message: 'Added to favorites!',
+                type: "success"
+            })
+            _swip.current.close();
         }}
         onSwipeableRightWillOpen={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
