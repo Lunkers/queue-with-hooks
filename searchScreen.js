@@ -14,6 +14,7 @@ const SearchView = ({ navigation }) => {
     const dispatch = React.useContext(DispatchContext);
     const [searchState, updateSearchText] = React.useState()
     const [showFilters, changeShowFilters] = React.useState(false)
+    const [filter, updateFilter] = React.useState(null)
 
     const searchResults = [
         { title: 'I love my wife', service: 'Spotify', image: require('./images/album1.png'), mediaId: "Song1", youtubeId: "TQcGnEhciNY" },
@@ -24,6 +25,9 @@ const SearchView = ({ navigation }) => {
         { title: 'music 3', service: 'Spotify', image: require('./images/album2.png'), mediaId: 'Song3', youtubeId: "YU3eDa8ehzc" },
     ]
 
+
+    const [results, updateResults] = React.useState(searchResults);
+    console.log(results)
     const addMedia = (item) => {
         showMessage({
             message: 'added to queue!',
@@ -35,16 +39,34 @@ const SearchView = ({ navigation }) => {
         }))
     }
 
+    const filterMedia = service => {
+        if (service === filter) {
+            updateResults(searchResults);
+            updateFilter(null)
+        }
+        else {
+            const filtered = searchResults.filter(result => result.service === service)
+            updateFilter(service)
+            updateResults(filtered)
+        }
+    }
+
 
     return (
         <SafeAreaView style={styles.scrollView}>
             <View style={styles.searchBox}>
-                <MaterialIcons name="search" size={32} color="white" />
+                <MaterialIcons name="search" size={32} color="#A64253" />
                 <TextInput placeholder="search" onChange={text => updateSearchText(text)} style={{ width: "75%" }} />
                 <Button title="filters" color="#FCE7CF" borderRadius={5} onPress={() => changeShowFilters(!showFilters)}></Button>
             </View>
-            <ScrollView style={{marginBottom: 50}} contentContainerStyle={{alignItems: 'center'}}>
-                {searchState && searchState !== '' && searchResults.map(result => (
+            {showFilters && <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '90%'}}>
+                <Button onPress={() => filterMedia("Spotify")} title="spotify" color={filter === "Spotify" ?  "#D6A99A":"#FCE7CF"} borderRadius={5}>SPOOFY</Button>
+                <Button onPress={() => filterMedia("Netflix")} title="netflix" color={filter === "Netflix" ? "#D6A99A":"#FCE7CF"} borderRadius={5}>Netflix</Button>
+                <Button onPress={() => filterMedia("Youtube")} title="youtube" color={filter === "Youtube"? "#D6A99A": "#FCE7CF"} borderRadius={5}>Youtube</Button>
+                <Button onPress={() => filterMedia("Steam")} title="steam" color={filter === "Steam"? "#D6A99A":"#FCE7CF"} borderRadius={5}>Steam</Button>
+            </View>}
+            <ScrollView style={{ marginBottom: 50 }} contentContainerStyle={{ alignItems: 'center' }}>
+                {searchState && searchState !== '' && results.map(result => (
                     <TouchableOpacity onPress={() => addMedia(result)} key={result.mediaId}>
                         <QueueCard key={result.mediaId} item={result} inQueue={false} />
                     </TouchableOpacity>
@@ -63,7 +85,6 @@ const styles = {
         width: "80%"
     },
     scrollView: {
-        marginTop: 25,
         height: "100%",
         width: "100%",
         backgroundColor: "#634B66",
@@ -82,7 +103,7 @@ const styles = {
 
 }
 SearchView.navigationOptions = {
-    tabBarIcon: () => (<MaterialIcons name="search" size={32} color="#A64253"/>)
+    tabBarIcon: () => (<MaterialIcons name="search" size={32} color="#A64253" />)
 }
 
 export default SearchView

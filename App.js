@@ -5,6 +5,7 @@ import reducer from './reducers/reducer'
 import { createAppContainer } from 'react-navigation';
 import QueueScreen from './QueueScreen';
 import SearchScreen from './searchScreen';
+import Favorites from './favorites'
 import { createBottomTabNavigator} from 'react-navigation-tabs'
 import FlashMessage from 'react-native-flash-message';
 
@@ -13,6 +14,7 @@ const MainNavigator = createBottomTabNavigator(
   {
     Queue: QueueScreen,
     Search: SearchScreen,
+    Favorites: Favorites,
   },
   {
     initialRouteName: 'Queue',
