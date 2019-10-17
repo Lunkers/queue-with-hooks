@@ -1,21 +1,28 @@
 
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { Animated, StyleSheet, Text, View, ScrollView,Image, TouchableOpacity } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import { StateContext, DispatchContext } from './context/context'
 import { removeItem } from './actions/remove_item';
 import types from './actions/action_types';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { RectButton } from "react-native-gesture-handler";
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import * as Haptics from 'expo-haptics';
 
+const AnimatedIcon = Animated.createAnimatedComponent(Icon);
 
 export default QueueCard = ({ item, inQueue }) => {
     const dispatch = React.useContext(DispatchContext);
+    const [fadeAnim] = useState(new Animated.Value(1.0));
     let _swip = React.createRef();
+
     const renderLeft = (progress, dragX) => (<View style={styles.infoCard}>
         <MaterialIcons name="queue" size={32} />
         <MaterialCommunityIcons size={32} name="heart-outline"/>
         <MaterialCommunityIcons name="dots-vertical" size={38} onPress={() => _swip.current.close()}/>
     </View>)
+
     const deleteItem = () => dispatch(removeItem({
         type: types.REMOVE_ITEM,
         payload: item
@@ -25,28 +32,75 @@ export default QueueCard = ({ item, inQueue }) => {
         payload: item
     }))
 
-    const renderRight = (progress, dragX) => (
-        <TouchableOpacity onPress={() => inQueue ? deleteItem() : addItem()}>
-            <View style={inQueue ? styles.deleteMenu : styles.addMenu}>
-                <MaterialIcons name={inQueue ? "delete" : "add"} size={32} />
-            </View>
-        </TouchableOpacity>
-    )
-    return (
-        <Swipeable renderLeftActions={renderLeft} style={styles.card} renderRightActions={renderRight} ref={_swip}>
-            <View style={styles.card}>
-                <View style={styles.card}>
+    var renderLeftAction = (progress, dragX) => {
+        const trans = progress.interpolate({
+          inputRange: [0, 1],
+          outputRange: [-200, 0],
+        });
 
-                    <MaterialCommunityIcons name="dots-vertical" size={38} onPress={() => _swip.current.openLeft()}/>
-                    <Image source={item.image} style={{ width: 60, height: 60, }} />
-                    <View>
-                        <Text>{item.title}</Text>
-                        <Text>{item.service}</Text>
-                    </View>
+        return (
+          <Animated.View style={{ flex: 1, flexDirection: "row", transform: [{ translateX: trans }], opacity: fadeAnim }}>
+            <RectButton
+              style={[styles.action, { backgroundColor: "#ffab00" }]}
+              onPress={() => {
+                  /* HÄR HÄNDER DET */
+              }}>
+              <MaterialCommunityIcons size={128} style={styles.actionText} name="heart-outline"/>
+            </RectButton>
+          </Animated.View>
+        );
+    };
+
+    var renderRightAction = (progress) => {
+        const trans = progress.interpolate({
+          inputRange: [0, 1],
+          outputRange: [192, 0],
+        });
+
+        return (
+          <Animated.View style={{ flex: 1, flexDirection: "row", transform: [{ translateX: trans }], opacity: fadeAnim }}>
+            <RectButton
+              style={[styles.action, { backgroundColor: "#dd2c00" }]}
+              onPress={() => deleteItem()}>
+              <Text style={styles.actionText}>Remove</Text>
+            </RectButton>
+          </Animated.View>
+        );
+    };
+
+    return (<Swipeable
+        ref={this.updateRef}
+        friction={2}
+        leftThreshold={80}
+        rightThreshold={80}
+        renderLeftActions={renderLeftAction}
+        renderRightActions={renderRightAction}
+        onSwipeableLeftWillOpen={() => {
+            /* HÄR HÄNDER DET */
+        }}
+        onSwipeableRightWillOpen={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+
+            Animated.timing(fadeAnim,{
+                toValue: 0.0,
+                duration: 500,
+                useNativeDriver: true
+            }).start(() => {
+                deleteItem();
+            });
+        }}
+        >
+        <Animated.View style={{opacity: fadeAnim}}>
+            <View style={styles.card}>
+                <MaterialCommunityIcons name="dots-vertical" size={38} onPress={() => _swip.current.openLeft()}/>
+                <Image source={item.image} style={{ width: 60, height: 60, }} />
+                <View>
+                    <Text>{item.title}</Text>
+                    <Text>{item.service}</Text>
                 </View>
             </View>
-        </Swipeable>
-    )
+        </Animated.View>
+      </Swipeable>);
 }
 
 const styles = {
@@ -55,14 +109,23 @@ const styles = {
         flexDirection: "row",
         marginTop: 10,
         marginBottom: 10,
+        marginLeft: 17,
         backgroundColor: "#A64253",
         border: "1px solid black",
         color: "#fff",
         borderRadius: 5,
-        width: "95%",
+        width: "90%",
         alignItems: 'center',
-        paddingTop: 5,
-        paddingBottom: 5,
+        padding: 20,
+        shadowColor: "#000",
+        shadowOffset: {
+        	width: 0,
+        	height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+
+        elevation: 5,
     },
     infoCard: {
         backgroundColor: "#D6A99A",
@@ -96,6 +159,19 @@ const styles = {
         alignItems:'center',
         flex:1,
         borderRadius: 5
-    }
+    },
+    actionText: {
+        color: 'white',
+        fontSize: 16,
+        backgroundColor: 'transparent',
+        padding: 10,
+    },
+    action: {
+        marginTop: 10,
+        marginBottom: 10,
+        alignItems: 'center',
+        flex: 1,
+        justifyContent: 'center',
+    },
 
 }
