@@ -39,7 +39,7 @@ const SearchView = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.scrollView}>
             <View style={styles.searchBox}>
-                <MaterialIcons name="search" size={32} color="white" />
+                <MaterialIcons name="search" size={32} color="#A64253" />
                 <TextInput placeholder="search" onChange={text => updateSearchText(text)} style={{ width: "75%" }} />
                 <Button title="filters" color="#FCE7CF" borderRadius={5} onPress={() => changeShowFilters(!showFilters)}></Button>
             </View>
