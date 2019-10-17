@@ -35,9 +35,16 @@ const QueueScreen = ({ navigation }) => {
         payload: item
     })
 
-    const pauseMedia = item => dispatch({
+    const pauseMedia = (item, action) => dispatch({
         type: types.PAUSE_ITEM,
-        payload: item
+        payload: action
+
+    })
+    const UpauseMedia = (item, action) => dispatch({
+        type: types.PAUSE_ITEM,
+        payload: action,
+        doNotSendMessage: true
+
     })
 
     useEffect(() => {
@@ -52,6 +59,9 @@ const QueueScreen = ({ navigation }) => {
                     }
                     else if (m.message.action == "remove") {
                         removeMedia(m.message.item);
+                    }
+                    else if (m.message.action == "pause" | "play") {
+                        UpauseMedia(m.message.item);
                     }
                 }
             }
@@ -82,7 +92,7 @@ const QueueScreen = ({ navigation }) => {
                             </View>
                         </View>
                         <View style={{flexDirection: 'row'}}>
-                            <MaterialCommunityIcons name="play" size={32} color="white" onPress={() => pauseMedia(nowPlaying)}/>
+                            <MaterialCommunityIcons name={state.isPaused? "play":"pause"} size={32} color="white" onPress={() => pauseMedia(nowPlaying, state.isPaused ? "play":"pause")}/>
                             <MaterialCommunityIcons name="skip-next" size={32} color="white" onPress={() => skipMedia(nowPlaying)}/>
                         </View>
                     </View>

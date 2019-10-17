@@ -14,8 +14,7 @@ export default (state, action) => {
             if (action.doNotSendMessage !== true) {
                 getPubNub().publish({
                     message: {
-                      action: 'pause',
-                      item: payload
+                      action: payload
                     },
                     channel: 'Queue'
                 });
@@ -23,6 +22,7 @@ export default (state, action) => {
 
             return {
                 ...state,
+                isPaused: !state.isPaused
             }
         }
 
