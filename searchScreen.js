@@ -112,7 +112,7 @@ const styles = {
         color: "#FCE7CF",
         flexDirection: "row",
         marginBottom: 10,
-        marginTop: 10,
+        marginTop: 32,
         borderRadius: 10
     },
 
