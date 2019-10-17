@@ -34,17 +34,11 @@ export default (state, action) => {
 
             let shouldSend = (action.doNotSendMessage !== true);
 
-            console.log(itemToAdd);
-
-            //console.log(action);
-            //console.log("Ska vi skicka? " +  (shouldSend ? "Kör på" : "Nej vi skiter i det"));
-
             if (shouldSend) {
-                console.log("Tjoff!");
                 getPubNub().publish({
                     message: {
-                      action: 'add',
-                      item: itemToAdd
+                        action: 'add',
+                        item: itemToAdd
                     },
                     channel: 'Queue'
                 });
@@ -63,8 +57,8 @@ export default (state, action) => {
             if (action.doNotSendMessage !== true) {
                 getPubNub().publish({
                     message: {
-                      action: 'remove',
-                      item: payload
+                        action: 'remove',
+                        item: payload
                     },
                     channel: 'Queue'
                 });
@@ -73,6 +67,28 @@ export default (state, action) => {
             return {
                 ...state,
                 queue: filteredQueue,
+            }
+        }
+
+        case types.ADD_FAVORITE: {
+            const favToAdd = {
+                ...action.payload,
+                id: state.favorites.length + 1
+            }
+
+            return {
+                ...state,
+                favorites: [...state.favorites, favToAdd]
+            }
+        }
+
+        case types.REMOVE_FAVORITE: {
+            const {payload} = action
+            const filteredFavorites = state.favorites.filter(i => i.id !== payload.id)
+
+            return {
+                ...state,
+                favorites: filteredFavorites
             }
         }
         default: {
