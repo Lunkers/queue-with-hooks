@@ -23,6 +23,12 @@ const MainNavigator = createBottomTabNavigator(
         duration: 0,
       },
     }),
+    tabBarOptions: {
+      activeTintColor: 'tomato',
+      inactiveTintColor: 'gray',
+      inactiveBackgroundColor: "#D6A99A",
+      activeBackgroundColor: "#FEE7D1"
+    },
   }
 )
 
