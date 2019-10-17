@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as Haptics from 'expo-haptics';
 
 const AnimatedIcon = Animated.createAnimatedComponent(Icon);
+const AnimatedMaterialIcon = Animated.createAnimatedComponent(MaterialCommunityIcons);
 
 export default QueueCard = ({ item, inQueue }) => {
     const dispatch = React.useContext(DispatchContext);
@@ -35,17 +36,22 @@ export default QueueCard = ({ item, inQueue }) => {
     var renderLeftAction = (progress, dragX) => {
         const trans = progress.interpolate({
           inputRange: [0, 1],
-          outputRange: [-200, 0],
+          outputRange: [-192, 0],
+        });
+
+        const icontrans = progress.interpolate({
+          inputRange: [0, 0.2, 0.5, 0.55, 1],
+          outputRange: [0, 10, -47.6, 0, 0],
         });
 
         return (
-          <Animated.View style={{ flex: 1, flexDirection: "row", transform: [{ translateX: trans }], opacity: fadeAnim }}>
+          <Animated.View style={{flex: 1, flexDirection: "row", transform: [{ translateX: trans }], opacity: fadeAnim }}>
             <RectButton
-              style={[styles.action, { backgroundColor: "#ffab00" }]}
+              style={[styles.action, { backgroundColor: "#D6A99A" }]}
               onPress={() => {
                   /* HÄR HÄNDER DET */
               }}>
-              <MaterialCommunityIcons size={128} style={styles.actionText} name="heart-outline"/>
+              <AnimatedMaterialIcon size={64} style={[styles.actionText, {transform: [{ translateX: icontrans }]}]} name="heart-outline"/>
             </RectButton>
           </Animated.View>
         );
@@ -57,30 +63,45 @@ export default QueueCard = ({ item, inQueue }) => {
           outputRange: [192, 0],
         });
 
+        const icontrans = progress.interpolate({
+          inputRange: [0, 0.2, 0.5, 0.55, 1],
+          outputRange: [0, -10, 47.6, 0, 0],
+        });
+
         return (
           <Animated.View style={{ flex: 1, flexDirection: "row", transform: [{ translateX: trans }], opacity: fadeAnim }}>
             <RectButton
               style={[styles.action, { backgroundColor: "#dd2c00" }]}
               onPress={() => deleteItem()}>
-              <Text style={styles.actionText}>Remove</Text>
+              <AnimatedMaterialIcon size={64} style={[styles.actionText, {transform: [{ translateX: icontrans }]}]} name="trash-can-outline"/>
             </RectButton>
           </Animated.View>
         );
     };
 
+    if (!inQueue) {
+        return <View style={styles.card}>
+            <MaterialCommunityIcons name="dots-vertical" size={38} onPress={() => _swip.current.openLeft()}/>
+            <Image source={item.image} style={{ width: 60, height: 60, }} />
+            <View>
+                <Text>{item.title}</Text>
+                <Text>{item.service}</Text>
+            </View>
+        </View>;
+    }
+
     return (<Swipeable
         ref={this.updateRef}
-        friction={2}
-        leftThreshold={80}
-        rightThreshold={80}
+        friction={1.1}
         renderLeftActions={renderLeftAction}
         renderRightActions={renderRightAction}
         onSwipeableLeftWillOpen={() => {
-            /* HÄR HÄNDER DET */
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
         }}
         onSwipeableRightWillOpen={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-
+        }}
+        onSwipeableRightOpen={() => {
             Animated.timing(fadeAnim,{
                 toValue: 0.0,
                 duration: 500,
@@ -109,12 +130,10 @@ const styles = {
         flexDirection: "row",
         marginTop: 10,
         marginBottom: 10,
-        marginLeft: 17,
         backgroundColor: "#A64253",
         border: "1px solid black",
         color: "#fff",
         borderRadius: 5,
-        width: "90%",
         alignItems: 'center',
         padding: 20,
         shadowColor: "#000",

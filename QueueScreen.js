@@ -99,12 +99,12 @@ const QueueScreen = ({ navigation }) => {
                     </View>
                     <Text style={styles.headerText}>Next playing:</Text>
                 </View>}
-                { nowPlaying === undefined && 
+                { nowPlaying === undefined &&
                 <View style={{ flexDirection: "row", marginTop: 22 }}>
                 <Image source={require("./images/hivaLogo.png")} style={styles.logo} />
                 <Text style={styles.headerText}>hiva</Text>
     </View>}
-            <ScrollView style={styles.scrollView} contentContainerStyle={styles.container}>
+            <ScrollView style={styles.scrollView}>
                 {getQueue(state).map(item => (nowPlaying !== item && <QueueCard key={item.id} item={item} inQueue={true} />))}
             </ScrollView>
         </SafeAreaView>
@@ -121,6 +121,7 @@ const styles = {
     scrollView: {
         height: "100%",
         width: "100%",
+        paddingHorizontal: 20,
         backgroundColor: "#634B66"
     },
     button: {
@@ -130,9 +131,7 @@ const styles = {
     container: {
         justifyContent: 'center',
         textAlign: "center",
-        alignItems: "center",
-        paddingLeft: 20,
-        paddingRight: 20
+        alignItems: "center"
     },
     headerText: {
         color: '#FEE7D1',

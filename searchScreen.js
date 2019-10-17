@@ -65,9 +65,9 @@ const SearchView = ({ navigation }) => {
                 <Button onPress={() => filterMedia("Youtube")} title="youtube" color={filter === "Youtube"? "#D6A99A": "#FCE7CF"} borderRadius={5}>Youtube</Button>
                 <Button onPress={() => filterMedia("Steam")} title="steam" color={filter === "Steam"? "#D6A99A":"#FCE7CF"} borderRadius={5}>Steam</Button>
             </View>}
-            <ScrollView style={{ marginBottom: 50 }} contentContainerStyle={{ alignItems: 'center' }}>
+            <ScrollView style={{ marginBottom: 50, width: "100%", paddingHorizontal: 20 }} contentContainerStyle={{ alignItems: 'center' }}>
                 {searchState && searchState !== '' && results.map(result => (
-                    <TouchableOpacity onPress={() => addMedia(result)} key={result.mediaId}>
+                    <TouchableOpacity onPress={() => addMedia(result)} key={result.mediaId} style={{width:"100%"}}>
                         <QueueCard key={result.mediaId} item={result} inQueue={false} />
                     </TouchableOpacity>
                 ))}
