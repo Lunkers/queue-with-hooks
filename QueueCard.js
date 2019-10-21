@@ -23,7 +23,7 @@ export default QueueCard = ({ item, inQueue }) => {
     const renderLeft = (progress, dragX) => (<View style={styles.infoCard}>
         <MaterialIcons name="queue" size={32} />
         <MaterialCommunityIcons size={32} name="heart-outline"/>
-        <MaterialCommunityIcons name="dots-vertical" size={38} onPress={() => _swip.current.close()}/>
+        <MaterialCommunityIcons name="dots-vertical" size={38} />
     </View>)
 
     const deleteItem = () => dispatch(removeItem({
@@ -91,7 +91,6 @@ export default QueueCard = ({ item, inQueue }) => {
 
     if (!inQueue) {
         return <View style={styles.card}>
-            <MaterialCommunityIcons name="dots-vertical" size={38} onPress={() => _swip.current.openLeft()}/>
             <Image source={item.image} style={{ width: 60, height: 60, }} />
             <View>
                 <Text>{item.title}</Text>
@@ -115,7 +114,6 @@ export default QueueCard = ({ item, inQueue }) => {
                 message: 'Added to favorites!',
                 type: "success"
             })
-            _swip.current.close();
         }}
         onSwipeableRightWillOpen={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -132,7 +130,6 @@ export default QueueCard = ({ item, inQueue }) => {
         >
         <Animated.View style={{opacity: fadeAnim}}>
             <View style={styles.card}>
-                <MaterialCommunityIcons name="dots-vertical" size={38} color="#FEE7D1" onPress={() => _swip.current.openLeft()}/>
                 <Image source={item.image} style={{ width: 60, height: 60, }} />
                 <View>
                     <Text style={styles.service}>{item.title}</Text>

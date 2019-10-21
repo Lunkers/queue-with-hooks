@@ -17,7 +17,7 @@ const Favorites = ({ navigation }) => {
             <Text style={styles.headerText}>My Favorites</Text>
             <ScrollView style={styles.scrollView} contentContainerStyle={styles.container}>
 
-                {getFavorites(state).map(item => (<QueueCard key={item.id} item={item} inQueue={true} />))}
+                {getFavorites(state).map(item => (<QueueCard key={item.id} item={item} inQueue={false} />))}
             </ScrollView>
         </SafeAreaView>
     )
@@ -28,7 +28,7 @@ const styles = {
         height: "100%",
         width: "100%",
         backgroundColor: "#634B66",
-        
+
     },
     headerText: {
         color: '#FEE7D1',
